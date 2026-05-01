@@ -103,6 +103,12 @@ services:
 
   taiga-events:
     image: taigaio/taiga-events:latest
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.taiga-events.rule=Host(`${TAIGA_DOMAIN}`) && PathPrefix(`/events`)
+      - traefik.http.routers.taiga-events.entryPoints=https
+      - traefik.http.routers.taiga-events.tls.certresolver=letsencrypt
+      - traefik.http.services.taiga-events.loadbalancer.server.port=8888
     environment:
       RABBITMQ_USER: "${RABBITMQ_USER}"
       RABBITMQ_PASS: "${RABBITMQ_PASS}"
