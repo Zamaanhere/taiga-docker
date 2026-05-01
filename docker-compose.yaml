@@ -103,12 +103,6 @@ services:
 
   taiga-events:
     image: taigaio/taiga-events:latest
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.taiga-events.rule=Host(`${TAIGA_DOMAIN}`) && PathPrefix(`/events`)
-      - traefik.http.routers.taiga-events.entryPoints=https
-      - traefik.http.routers.taiga-events.tls.certresolver=letsencrypt
-      - traefik.http.services.taiga-events.loadbalancer.server.port=8888
     environment:
       RABBITMQ_USER: "${RABBITMQ_USER}"
       RABBITMQ_PASS: "${RABBITMQ_PASS}"
@@ -136,12 +130,6 @@ services:
 
   taiga-gateway:
     image: nginx:1.19-alpine
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.taiga.rule=Host(`${TAIGA_DOMAIN}`)
-      - traefik.http.routers.taiga.entryPoints=https
-      - traefik.http.routers.taiga.tls.certresolver=letsencrypt
-      - traefik.http.services.taiga.loadbalancer.server.port=80
     configs:
       - source: taiga_nginx_conf
         target: /etc/nginx/conf.d/default.conf
