@@ -28,7 +28,6 @@ x-volumes:
   &default-back-volumes
   - taiga-static-data:/taiga-back/static
   - taiga-media-data:/taiga-back/media
-  # - ./config.py:/taiga-back/settings/config.py
 
 services:
   taiga-manage:
@@ -38,5 +37,7 @@ services:
       - taiga-db
     entrypoint: "python manage.py"
     volumes: *default-back-volumes
-    networks:
-      - taiga
+
+volumes:
+  taiga-static-data:
+  taiga-media-data:
